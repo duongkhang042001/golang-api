@@ -45,4 +45,4 @@ dev:
 	@echo "Starting development server..."
 	@$(GORUN) $(MAIN_FILE)
 
-.PHONY: all build run clean watch dev
+.PHONY: all build run cleanS dev
