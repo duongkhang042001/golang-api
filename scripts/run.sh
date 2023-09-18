@@ -6,6 +6,12 @@ YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No color
 
+ROOT_DIR=`pwd`
+OUT_DIR=bin
+
+GOOS=linux 
+GOARCH=amd64
+
 # Function to display menu
 show_menu() {
     clear
@@ -13,61 +19,29 @@ show_menu() {
     echo -e "${GREEN}   Multi-Service Golang Project   ${NC}"
     echo -e "${GREEN}==================================${NC}"
     echo -e "${YELLOW}1. Build API${NC}"
-    echo -e "${YELLOW}2. Build Worker${NC}"
-    echo -e "${YELLOW}3. Build Gateway${NC}"
-    echo -e "${YELLOW}4. Run API${NC}"
-    echo -e "${YELLOW}5. Run Worker${NC}"
-    echo -e "${YELLOW}6. Run Gateway${NC}"
-    echo -e "${YELLOW}7. Clean Projects${NC}"
-    echo -e "${YELLOW}8. Exit${NC}"
+    echo -e "${YELLOW}2. Exit${NC}"
     echo -e "${GREEN}==================================${NC}"
+}
+
+# Function to create folder
+create_folder() {
+    if [ ! -d ${ROOT_DIR}/${OUT_DIR} ]; then
+        mkdir ${ROOT_DIR}/${OUT_DIR}
+    fi
 }
 
 while true; do
     show_menu
+    create_folder
     read -p "Select an option [1-8]: " choice
     case $choice in
         1)
-            go build  -o bin/api cmd/api/main.go
+            cd ${ROOT_DIR}/cmd/api && GOOS=${GOOS} GOARCH=${GOARCH} go build -o ${ROOT_DIR}/${OUT_DIR}/api
             cd ..
             echo -e "${BLUE}API built successfully.${NC}"
             read -n 1 -s -r -p "Press any key to continue..."
             ;;
         2)
-            cd worker
-            go build -o worker
-            cd ..
-            echo -e "${BLUE}Worker built successfully.${NC}"
-            read -n 1 -s -r -p "Press any key to continue..."
-            ;;
-        3)
-            cd gateway
-            go build -o gateway
-            cd ..
-            echo -e "${BLUE}Gateway built successfully.${NC}"
-            read -n 1 -s -r -p "Press any key to continue..."
-            ;;
-        4)
-            cd api
-            ./api
-            cd ..
-            ;;
-        5)
-            cd worker
-            ./worker
-            cd ..
-            ;;
-        6)
-            cd gateway
-            ./gateway
-            cd ..
-            ;;
-        7)
-            rm -f api/api worker/worker gateway/gateway
-            echo -e "${BLUE}Projects cleaned.${NC}"
-            read -n 1 -s -r -p "Press any key to continue..."
-            ;;
-        8)
             echo -e "${BLUE}Exiting.${NC}"
             exit 0
             ;;
