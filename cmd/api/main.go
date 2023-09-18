@@ -21,6 +21,8 @@ func main() {
 
 	defer configs.CloseDatabaseConnection(db)
 
+	os.Setenv("TZ", "Asia/Ho_Chi_Minh")
+
 	if os.Getenv("APP_ENV") == "PRODUCTION" {
 		gin.SetMode(gin.ReleaseMode)
 	}
@@ -40,6 +42,7 @@ func main() {
 	app.SetTrustedProxies([]string{"127.0.0.1"})
 
 	app.Use(cors)
+
 	app.Use(request)
 
 	routes.SetupRoutes(app)
