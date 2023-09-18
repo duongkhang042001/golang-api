@@ -1,9 +1,9 @@
 package main
 
 import (
-	"core-api/internal/configs"
-	"core-api/internal/middlewares"
-	"core-api/internal/routes"
+	"core-api/internal/api/configs"
+	"core-api/internal/api/middlewares"
+	"core-api/internal/api/routes"
 
 	"os"
 

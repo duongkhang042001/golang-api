@@ -11,7 +11,7 @@ GOTEST = $(GOCMD) test
 BINARY_NAME = core-api
 
 # Main entry file
-MAIN_FILE = cmd/main.go
+MAIN_FILE = cmd/api/main.go
 
 # Build flags
 BUILD_FLAGS =
