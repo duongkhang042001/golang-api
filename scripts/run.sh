@@ -33,7 +33,7 @@ create_folder() {
 while true; do
     show_menu
     create_folder
-    read -p "Select an option [1-8]: " choice
+    read -p "Select an option [1-2]: " choice
     case $choice in
         1)
             cd ${ROOT_DIR}/cmd/api && GOOS=${GOOS} GOARCH=${GOARCH} go build -o ${ROOT_DIR}/${OUT_DIR}/api
