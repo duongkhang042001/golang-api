@@ -45,7 +45,10 @@ func main() {
 
 	app.Use(request)
 
-	routes.SetupRoutes(app)
+	routes.SetupRoutes(app, db)
 
 	app.Run()
 }
+
+
+// https://github.com/araujo88/golang-rest-api-template/
