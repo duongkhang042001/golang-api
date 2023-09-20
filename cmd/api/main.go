@@ -46,7 +46,7 @@ func main() {
 
 	app.Use(request)
 
-	routes.SetupRoutes(app, db)
+	routes.SetupRoutes(app)
 
 	app.Run()
 }
