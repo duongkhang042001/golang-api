@@ -1,6 +1,7 @@
 package configs
 
 import (
+	"core-api/internal/api/models"
 	"fmt"
 	"os"
 
@@ -26,7 +27,7 @@ func SetupDatabaseConnection() *gorm.DB {
 		panic("Failed to create a connection to database!")
 	}
 
-	db.AutoMigrate()
+	db.AutoMigrate(&models.User{})
 	return db
 }
 
