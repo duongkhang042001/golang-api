@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"core-api/internal/api/services"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,17 +11,17 @@ type UserController interface {
 	GetAllUsers(ctx *gin.Context)
 }
 
-type ControllerConnector struct {
+type UserControllerImpl struct {
 	userService services.UserService
 }
 
 func NewUserController() UserController {
-	return &ControllerConnector{
+	return &UserControllerImpl{
 		userService: services.NewUserService(),
 	}
 }
 
-func (uc *ControllerConnector) GetAllUsers(ctx *gin.Context) {
+func (uc *UserControllerImpl) GetAllUsers(ctx *gin.Context) {
 	users := uc.userService.GetAllUsers()
-	ctx.JSON(200, users)
+	ctx.JSON(http.StatusOK, users)
 }

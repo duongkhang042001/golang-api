@@ -9,16 +9,16 @@ type UserService interface {
 	GetAllUsers() []models.User
 }
 
-type ServiceConnector struct {
-	UserRepository repositories.UserRepository
+type UserServiceImpl struct {
+	userRepository repositories.UserRepository
 }
 
 func NewUserService() UserService {
-	return &ServiceConnector{
-		UserRepository: repositories.NewUserRepository(),
+	return &UserServiceImpl{
+		userRepository: repositories.NewUserRepository(),
 	}
 }
 
-func (service *ServiceConnector) GetAllUsers() []models.User {
-	return service.UserRepository.All()
+func (us *UserServiceImpl) GetAllUsers() []models.User {
+	return us.userRepository.All()
 }
