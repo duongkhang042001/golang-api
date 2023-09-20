@@ -6,6 +6,6 @@ import (
 )
 
 func SetupRoutes(app *gin.Engine, db *gorm.DB) {
-	RegisterAuthRoutes(app, db)
-	RegisterUserRoutes(app, db)
+	RegisterAuthRoutes(app)
+	RegisterUserRoutes(app)
 }

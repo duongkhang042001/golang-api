@@ -1,10 +1,11 @@
 package routes
 
 import (
+	"core-api/internal/api/controllers"
+
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
-func RegisterUserRoutes(router *gin.Engine, db *gorm.DB) {
-
+func RegisterUserRoutes(router *gin.Engine) {
+	router.GET("users", controllers.NewUserController().GetAllUsers)
 }

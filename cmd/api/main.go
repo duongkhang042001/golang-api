@@ -11,14 +11,15 @@ import (
 	"gorm.io/gorm"
 )
 
-var (
-	db      *gorm.DB = configs.SetupDatabaseConnection()
-	cors             = middlewares.CorsMiddleware()
-	request          = middlewares.RequestIdMiddleware()
-)
+var db *gorm.DB
+var cors = middlewares.CorsMiddleware()
+var request = middlewares.RequestIdMiddleware()
+
+func init() {
+	db = configs.SetupDatabaseConnection()
+}
 
 func main() {
-
 	defer configs.CloseDatabaseConnection(db)
 
 	os.Setenv("TZ", "Asia/Ho_Chi_Minh")
@@ -49,6 +50,5 @@ func main() {
 
 	app.Run()
 }
-
 
 // https://github.com/araujo88/golang-rest-api-template/

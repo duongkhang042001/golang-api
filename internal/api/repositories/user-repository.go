@@ -1,13 +1,14 @@
 package repositories
 
 import (
+	"core-api/internal/api/configs"
 	"core-api/internal/api/models"
 
 	"gorm.io/gorm"
 )
 
 type UserRepository interface {
-	All(filter interface{}) []models.User
+	All() []models.User
 	Create(user models.User) models.User
 	Find(id int) models.User
 	Update(id int, user models.User) models.User
@@ -18,14 +19,16 @@ type RepositoryConnector struct {
 	connection *gorm.DB
 }
 
-func NewUserRepository(db *gorm.DB) UserRepository {
+func NewUserRepository() UserRepository {
 	return &RepositoryConnector{
-		connection: db,
+		connection: configs.SetupDatabaseConnection(),
 	}
 }
 
-func (rc *RepositoryConnector) All(filter interface{}) []models.User {
-	return []models.User{}
+func (rc *RepositoryConnector) All() []models.User {
+	var users []models.User
+	rc.connection.Find(&users)
+	return users
 }
 
 func (rc *RepositoryConnector) Create(user models.User) models.User {
