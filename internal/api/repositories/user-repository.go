@@ -1,8 +1,8 @@
 package repositories
 
 import (
-	"core-api/internal/api/configs"
 	"core-api/internal/api/models"
+	"core-api/pkg/database"
 
 	"gorm.io/gorm"
 )
@@ -21,7 +21,7 @@ type UserRepositoryImpl struct {
 
 func NewUserRepository() UserRepository {
 	return &UserRepositoryImpl{
-		connection: configs.SetupDatabaseConnection(),
+		connection: database.SetupDatabaseConnection(),
 	}
 }
 

@@ -1,26 +1,23 @@
 package main
 
 import (
-	"core-api/internal/api/configs"
-	"core-api/internal/api/middlewares"
 	"core-api/internal/api/routes"
+	"core-api/pkg/database"
+	"core-api/pkg/middlewares"
 
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
-var db *gorm.DB
 var cors = middlewares.CorsMiddleware()
 var request = middlewares.RequestIdMiddleware()
 
-func init() {
-	db = configs.SetupDatabaseConnection()
-}
-
 func main() {
-	defer configs.CloseDatabaseConnection(db)
+
+	database.SetupDatabaseConnection()
+
+	defer database.CloseDatabaseConnection()
 
 	os.Setenv("TZ", "Asia/Ho_Chi_Minh")
 
