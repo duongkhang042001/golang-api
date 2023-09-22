@@ -7,7 +7,7 @@ import (
 func CorsMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		// Set response headers to allow CORS requests from http://localhost
-		ctx.Writer.Header().Set("Access-Control-Allow-Origin", "http://localhost")
+		ctx.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 		ctx.Writer.Header().Set("Access-Control-Max-Age", "86400")
 		ctx.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, PATCH, UPDATE")
 		ctx.Writer.Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding, x-access-token")

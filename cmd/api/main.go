@@ -10,9 +10,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var cors = middlewares.CorsMiddleware()
-var request = middlewares.RequestIdMiddleware()
-
 func main() {
 
 	database.SetupDatabaseConnection()
@@ -39,9 +36,9 @@ func main() {
 
 	app.SetTrustedProxies([]string{"127.0.0.1"})
 
-	app.Use(cors)
+	app.Use(middlewares.CorsMiddleware())
 
-	app.Use(request)
+	app.Use(middlewares.RequestIdMiddleware())
 
 	routes.SetupRoutes(app)
 
