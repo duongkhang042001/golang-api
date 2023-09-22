@@ -19,7 +19,8 @@ show_menu() {
     echo -e "${GREEN}   Multi-Service Golang Project   ${NC}"
     echo -e "${GREEN}==================================${NC}"
     echo -e "${YELLOW}1. Build API${NC}"
-    echo -e "${YELLOW}2. Exit${NC}"
+    echo -e "${YELLOW}2. Build Worker${NC}"
+    echo -e "${YELLOW}3. Exit${NC}"
     echo -e "${GREEN}==================================${NC}"
 }
 
@@ -33,12 +34,18 @@ create_folder() {
 while true; do
     show_menu
     create_folder
-    read -p "Select an option [1-2]: " choice
+    read -p "Select an option [1-3]: " choice
     case $choice in
         1)
-            cd ${ROOT_DIR}/cmd/api && GOOS=${GOOS} GOARCH=${GOARCH} go build -o ${ROOT_DIR}/${OUT_DIR}/api
+            cd ${ROOT_DIR}/cmd/api && GOOS=${GOOS} GOARCH=${GOARCH} go build -o ${ROOT_DIR}/${OUT_DIR}/core-api
             cd ..
             echo -e "${BLUE}API built successfully.${NC}"
+            read -n 1 -s -r -p "Press any key to continue..."
+            ;;
+        2)
+            cd ${ROOT_DIR}/cmd/worker && GOOS=${GOOS} GOARCH=${GOARCH} go build -o ${ROOT_DIR}/${OUT_DIR}/worker
+            cd ..
+            echo -e "${BLUE}Worker built successfully.${NC}"
             read -n 1 -s -r -p "Press any key to continue..."
             ;;
         2)
