@@ -3,6 +3,7 @@ package repositories
 import (
 	"core-api/internal/api/models"
 	"core-api/pkg/database"
+	"core-api/pkg/pagination"
 
 	"gorm.io/gorm"
 )
@@ -16,29 +17,38 @@ type UserRepository interface {
 }
 
 type UserRepositoryImpl struct {
-	connection *gorm.DB
+	db *gorm.DB
 }
 
 func NewUserRepository() UserRepository {
 	return &UserRepositoryImpl{
-		connection: database.SetupDatabaseConnection(),
+		db: database.SetupDatabaseConnection(),
 	}
 }
 
 func (ur *UserRepositoryImpl) All() []models.User {
 	var users []models.User
-	ur.connection.Find(&users)
+
+	paginationData := pagination.Pagination{
+		Limit:      1,
+		Page:       2,
+		TotalRows:  100,
+		TotalPages: 10,
+	}
+
+	ur.db.Scopes(pagination.Paginate(users, &paginationData, ur.db)).Find(&users)
+
 	return users
 }
 
 func (ur *UserRepositoryImpl) Create(user models.User) error {
-	result := ur.connection.Create(&user)
+	result := ur.db.Create(&user)
 	return result.Error
 }
 
 func (ur *UserRepositoryImpl) Find(id int) (*models.User, error) {
 	var user models.User
-	result := ur.connection.First(&user, id)
+	result := ur.db.First(&user, id)
 	if result.Error != nil {
 		return nil, result.Error
 	}
@@ -46,11 +56,11 @@ func (ur *UserRepositoryImpl) Find(id int) (*models.User, error) {
 }
 
 func (ur *UserRepositoryImpl) Update(id int, user models.User) error {
-	result := ur.connection.Model(&models.User{}).Where("id = ?", id).Updates(user)
+	result := ur.db.Model(&models.User{}).Where("id = ?", id).Updates(user)
 	return result.Error
 }
 
 func (ur *UserRepositoryImpl) Delete(id int) error {
-	result := ur.connection.Delete(&models.User{}, id)
+	result := ur.db.Delete(&models.User{}, id)
 	return result.Error
 }
