@@ -41,7 +41,7 @@ func getEncoder() zapcore.Encoder {
 }
 
 func getLogWriter() zapcore.WriteSyncer {
-	logsFileURL := fmt.Sprintf("./logs/logs_%s.log", time.Now().Format("2006_01_02"))
+	logsFileURL := fmt.Sprintf("./storage/logs/logs_%s.log", time.Now().Format("2006_01_02"))
 	file, _ := os.Create(logsFileURL)
 	return zapcore.AddSync(file)
 }
