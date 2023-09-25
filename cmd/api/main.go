@@ -4,6 +4,7 @@ import (
 	"core-api/internal/api/routes"
 	"core-api/pkg/database"
 	"core-api/pkg/middlewares"
+	"core-api/pkg/redis"
 
 	"os"
 
@@ -11,6 +12,8 @@ import (
 )
 
 func main() {
+
+	redis.InitRedis()
 
 	database.SetupDatabaseConnection()
 
@@ -40,7 +43,7 @@ func main() {
 
 	app.Use(middlewares.RequestIdMiddleware())
 
-	app.Use(middlewares.JwtMiddleware())
+	// app.Use(middlewares.JwtMiddleware())
 
 	routes.SetupRoutes(app)
 
