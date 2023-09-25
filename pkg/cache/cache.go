@@ -14,6 +14,7 @@ func init() {
 type Cache interface {
 	Get(key string) (string, error)
 	Set(key string, value string, expiration time.Duration) error
+	Remember(key string, expiration time.Duration, getter func() (string, error)) (string, error)
 }
 
 type CacheImpl struct {
@@ -39,4 +40,23 @@ func (c *CacheImpl) Get(key string) (string, error) {
 func (c *CacheImpl) Set(key string, value string, expiration time.Duration) error {
 	err := c.redisDB.Set(redisPkg.Ctx, key, value, expiration).Err()
 	return err
+}
+
+func (c *CacheImpl) Remember(key string, expiration time.Duration, getter func() (string, error)) (string, error) {
+	cachedValue, err := c.Get(key)
+	if err == nil {
+		return cachedValue, nil
+	}
+
+	fetchedValue, err := getter()
+	if err != nil {
+		return "", err
+	}
+
+	err = c.Set(key, fetchedValue, expiration)
+	if err != nil {
+		return "", err
+	}
+
+	return fetchedValue, nil
 }
