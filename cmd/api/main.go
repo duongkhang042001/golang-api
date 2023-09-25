@@ -40,9 +40,9 @@ func main() {
 
 	app.Use(middlewares.RequestIdMiddleware())
 
+	app.Use(middlewares.JwtMiddleware())
+
 	routes.SetupRoutes(app)
 
 	app.Run()
 }
-
-// https://github.com/araujo88/golang-rest-api-template/

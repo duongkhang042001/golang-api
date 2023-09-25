@@ -30,8 +30,8 @@ func BuildErrorResponse(message string, err string, data interface{}) Response {
 	res := Response{
 		Status:  false,
 		Message: message,
-		Errors:  splittedError,
 		Data:    data,
+		Errors:  splittedError,
 	}
 	return res
 }
