@@ -6,6 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var userController controllers.UserController = controllers.NewUserController()
+
 func RegisterUserRoutes(router *gin.Engine) {
-	router.GET("users", controllers.NewUserController().GetAllUsers)
+	router.GET("users", userController.GetAllUsers)
 }
